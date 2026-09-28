@@ -1667,6 +1667,87 @@ reinicie	restart
 #VIDEO > MODO DE RENDERIZACAO	#VIDEO > RENDERING MODE
 #VIDEO > GRAFICOS	#VIDEO > GRAPHICS
 e importar: -silentImport	and import: -silentImport
+Cria/atualiza o plano "Fortnite Otimizador" com ~20 configuracoes avancadas conferidas no SEU Windows (boost agressivo, EPP maximo, sem core parking, USB/USB3/PCIe/Wi-Fi/HD sem economia, resfriamento ativo, Power Throttling OFF). O perfil muda conforme o CPU: Intel classico, Intel hibrido P+E, Ryzen, Ryzen X3D de 2 CCDs (que NAO pode desestacionar nucleos). Seu plano atual nao e alterado. O Desfazer volta pra ele. Veja o item abaixo para escolher/exportar/importar.	Creates/updates the "Fortnite Optimizer" plan with ~20 advanced settings tailored to YOUR Windows (aggressive boost, max EPP, no core parking, USB/USB3/PCIe/Wi-Fi/HD without power saving, active cooling, Power Throttling OFF). Profile varies by CPU: classic Intel, Intel hybrid P+E, Ryzen, Ryzen X3D with 2 CCDs (which cannot unpark cores). Your current plan is not changed. Undo reverts to it. See the item below to choose/export/import.
+Microsoft e testes independentes mostram +5 a 15% FPS em alguns jogos ao desligar (varia muito. Em CPU recente e menor). Custo: perde uma camada anti-malware de kernel e desliga Credential Guard. Se voce usa VirtualBox/WSL2/Hyper-V isso nao afeta. Depois confirme em Seguranca do Windows > Isolamento de nucleo. Updates grandes do Windows 11 (24H2/25H2) podem religar sozinho. Reconfira o estado aqui apos cada atualizacao de versao. Reversivel.	Microsoft and independent tests show +5 to 15% FPS on some games when disabled (varies greatly. Less on recent CPU). Cost: loses a kernel anti-malware layer and disables Credential Guard. If you use VirtualBox/WSL2/Hyper-V this doesn't affect it. Then confirm in Windows Security > Core Isolation. Large Windows 11 updates (24H2/25H2) may re-enable on their own. Recheck status here after each version update. Reversible.
+Desliga protecoes do kernel contra ataques de execucao especulativa (FeatureSettingsOverride=3). Ganho medido so em CPUs antigas (Intel ate a 8a/9a geracao, Ryzen 1000/2000), e mais em disco/rede do que em FPS. Em CPU recente (Intel 12a+ / Ryzen 5000+) o ganho e praticamente zero. Custo: um programa malicioso pode ler memoria de outro processo. Nao recomendado para PC de uso geral. Reversivel.	Disables kernel protections against speculative execution attacks (FeatureSettingsOverride=3). Measured gain only on old CPUs (Intel up to 8th/9th gen, Ryzen 1000/2000), more on disk/network than FPS. On recent CPU (Intel 12th+ / Ryzen 5000+) gain is nearly zero. Cost: malicious program can read another process' memory. Not recommended for general-use PC. Reversible.
+Configuracao oficial do Windows 11: jogos DirectX 10/11 em janela ou sem borda passam a apresentar quadros pelo modelo "flip", que tem menos latencia e libera VRR. Honesto: no Fortnite atual (DirectX 12 e Modo Desempenho, que virou DX12 no patch 37.00) NAO muda nada. Vale para outros jogos DX11 e para quem ainda usa DX11. Preserva os outros ajustes da mesma chave (Auto HDR, VRR).	Official Windows 11 setting: DirectX 10/11 games windowed or borderless now present frames via 'flip' model, with lower latency and freeing VRR. Honest: on current Fortnite (DirectX 12 and Performance Mode, which became DX12 in patch 37.00) it changes nothing. Applies to other DX11 games and DX11 users. Preserves other settings on same key (Auto HDR, VRR).
+Grava PerfOptions (CpuPriorityClass=High, IoPriority=High) para o FortniteClient-Win64-Shipping.exe: o Windows ja cria o processo com prioridade alta, sem programa extra. O Easy Anti-Cheat bloqueia mudar prioridade de fora com o jogo aberto, mas isto e aplicado na criacao. Nao ha relato conhecido de ban por PerfOptions. A Epic nao documenta. Se o EAC reclamar, desfaca.	Writes PerfOptions (CpuPriorityClass=High, IoPriority=High) for FortniteClient-Win64-Shipping.exe: Windows already creates the process with high priority, no extra program. Easy Anti-Cheat blocks changing priority from outside with the game open, but this is applied at creation. No known reports of bans for PerfOptions. Epic doesn't document. If EAC complains, undo.
+Tarefa no logon (PowerShell nativo, 0 download) que pede a MENOR resolucao possivel via NtSetTimerResolution. Custo real: CPU acorda ~2000x/s em vez de ~64x/s, mais consumo em idle e bateria. Combine com o item acima. Se o jogo ja pede sozinho, o ganho extra e pequeno. Use "Medir timer" no Diagnostico para conferir.	Task at logon (native PowerShell, 0 download) that requests the LOWEST possible resolution via NtSetTimerResolution. Real cost: CPU wakes ~2000x/s instead of ~64x/s, more idle and battery consumption. Combine with the item above. If the game already requests it, extra gain is small. Use "Measure timer" in Diagnostics to check.
+Honesto: o Fortnite usa raw input e NAO tem aceleracao de mouse no PC, entao isto NAO muda a mira dentro do jogo. So deixa o cursor de desktop/menu/loja 1:1. Para a mira o que importa: DPI fixo (400-1600), polling 1000 Hz+ no software do mouse e sensibilidade no proprio jogo.	Honest: Fortnite uses raw input and has NO mouse acceleration on PC, so this does NOT change aim in-game. Only makes desktop/menu/shop cursor 1:1. For aim what matters: fixed DPI (400-1600), 1000 Hz+ polling in mouse software and sensitivity in the game itself.
+Menos pixels = mais FPS e modelos mais largos. Custo: imagem mais borrada e menos visao lateral. Windows E Fortnite mudam juntos p/ nao dar conflito. Se o modo nao existir no driver, o script explica como criar (CRU / painel da GPU). Presets sao para monitor 1080p.	Fewer pixels = more FPS and wider models. Cost: blurrier image and less peripheral vision. Windows AND Fortnite change together to avoid conflict. If the mode doesn't exist in driver, script explains how to create (CRU / GPU panel). Presets are for 1080p monitors.
+Marca DISABLEDXMAXIMIZEDWINDOWEDMODE no exe. No Win11 24H2/25H2 o modo "Independent Flip" ja evita o compositor em muitos casos, entao o ganho hoje e menor que no Win10. O item so garante o comportamento antigo. Use tambem "Tela cheia" (nao janela) no jogo.	Sets DISABLEDXMAXIMIZEDWINDOWEDMODE on exe. On Win11 24H2/25H2 "Independent Flip" mode already avoids the compositor in many cases, so gain today is less than on Win10. The item only guarantees the old behavior. Also use "Fullscreen" (not windowed) in the game.
+r.OneFrameThreadLag=1 ja e o padrao da Unreal Engine e a Epic nao documenta Engine.ini como suportado (pode ignorar ou reverter). Efeito pratico desconhecido/nulo. Mantido so por compatibilidade. O desfazer remove exatamente as chaves adicionadas.	r.OneFrameThreadLag=1 is already Unreal Engine's default and Epic doesn't document Engine.ini as supported (can ignore or revert). Practical effect unknown/nil. Kept only for compatibility. Undo removes exactly the added keys.
+O maior ganho isolado de latencia e que cada Hz a mais reduz o tempo entre quadros (60Hz = 16,7 ms, 144Hz = 6,9 ms, 240Hz = 4,2 ms). Detecta o maior Hz que o Windows oferece e troca com teste e confirmacao (volta sozinho se a tela ficar preta).	The largest isolated latency gain is that each extra Hz reduces time between frames (60Hz = 16.7 ms, 144Hz = 6.9 ms, 240Hz = 4.2 ms). Detects the highest Hz Windows offers and switches with test and confirmation (reverts itself if screen goes black).
+Prioridade e afinidade persistentes por programa. Em CPU Intel hibrida (12a gen+) ou Ryzen de 2 CCDs ajuda a prender o jogo nos nucleos certos. O EAC pode bloquear mudar o jogo com ele aberto. Use as regras para os OUTROS apps.	Persistent priority and affinity per app. On hybrid Intel CPUs (12th gen+) or Ryzen 2-CCD: helps pin the game to the right cores. EAC can block priority changes with the game open. Use rules for OTHER apps.
+Grava MSISupported=1 na chave do dispositivo (o mesmo que o MSI Utility faz). Precisa reiniciar. Se algum driver nao suportar MSI o Windows ignora. Em caso raro de tela preta, entre no Modo Seguro e use Desfazer/Restaurar.	Writes MSISupported=1 to the device key (same as MSI Utility does). Requires restart. If any driver doesn't support MSI Windows ignores it. In rare case of black screen, enter Safe Mode and use Undo/Restore.
+A GPU nunca desce abaixo de ~75% do clock maximo. Some o atraso de "acordar" a GPU entre cenas leves e pesadas. Custo: mais calor/consumo em idle enquanto travado. Equivale a "Prefer maximum performance" mas mais rigido.	GPU never drops below ~75% of max clock. Removes the delay to 'wake up' the GPU between light and heavy scenes. Cost: more heat/power draw at idle while locked. Equivalent to 'Prefer maximum performance' but stricter.
++NVIDIA Reflex: "Ligado + Impulso". Ligado ja remove a fila de renderizacao. O Impulso tambem impede a GPU de baixar o clock entre quadros (ganho extra quando a GPU NAO esta em 99%, ex.: notebook, menus, FPS travado).	+NVIDIA Reflex: "On + Boost". On already removes the render queue. Boost also prevents the GPU from lowering the clock between frames (extra gain when the GPU is NOT at 99%, e.g.: laptop, menus, locked FPS).
+Tweak classico. O padrao do Windows cliente ja e "curto+variavel". 38 (0x26) e quase igual. 42 (0x2A) usa quantum FIXO e e o unico que muda de verdade, com resultados mistos em testes. Voce escolhe o valor.	Classic tweak. Windows client default is already "short+variable". 38 (0x26) is almost the same. 42 (0x2A) uses FIXED quantum and is the only one that truly changes, with mixed test results. You choose the value.
+Aviso de seguranca: exclusao reduz a protecao nessas pastas. So as pastas do jogo (instalacao + %LOCALAPPDATA%\FortniteGame). Ganho pequeno com o Defender padrao. Maior com antivirus de terceiros pesado.	Security warning: exclusion reduces protection in those folders. Only game folders (install + %LOCALAPPDATA%\FortniteGame). Small gain with default Defender. Bigger with heavy third-party antivirus.
+!useplatformtick / useplatformclock (HPET forcado): os tweaks de timer com mais relatos de PIORAR input lag. O otimizador nunca liga. O BCDEdit avancado so REMOVE o useplatformclock se alguem forcou.	!useplatformtick / useplatformclock (forced HPET): timer tweaks with most reports of WORSENING input lag. The optimizer never enables it. Advanced BCDEdit only REMOVES useplatformclock if someone forced it.
+Reserva mais CPU/GPU para tarefas multimidia registradas como Games. Nao ha prova de que o Fortnite use essa classe do MMCSS. Efeito pequeno/nao comprovado. Mantido por ser seguro e reversivel.	Reserves more CPU/GPU for multimedia tasks registered as Games. No proof that Fortnite uses this MMCSS class. Small/unproven effect. Kept because it's safe and reversible.
+Limitador de FPS de menor variacao de frametime. O Fortnite ja tem limitador proprio + Reflex. RTSS e opcional e o overlay pode ser bloqueado pelo Easy Anti-Cheat. Use so se souber por que.	FPS limiter with lower frametime variance. Fortnite already has its own limiter + Reflex. RTSS is optional and the overlay can be blocked by Easy Anti-Cheat. Use only if you know why.
+Com quantum fixo, alguns relatam menos latencia e melhor 1% low. Em PC com muita coisa aberta pode prejudicar multitarefa. Testes independentes nao mostram diferenca estatistica clara.	With fixed quantum, some report less latency and better 1% low. On PC with lots open it can hurt multitasking. Independent tests show no clear statistical difference.
+MouseDataQueueSize/KeyboardDataQueueSize (padrao 100). Pesquisa dividida. Varios testes nao acham ganho real e alguns chamam de placebo. Sem risco de quebrar (nao use menos de 16).	MouseDataQueueSize/KeyboardDataQueueSize (default 100). Divided research. Many tests find no real gain and some call it placebo. No risk of breaking (don't use less than 16).
+TcpNoDelay/TcpAckFrequency=1 so afetam TCP (login, party, chat). O gameplay do Fortnite e UDP, entao NAO muda tiro/build. Seguro e reversivel. Aplicado so as placas fisicas ativas.	TcpNoDelay/TcpAckFrequency=1 only affect TCP (login, party, chat). Fortnite gameplay is UDP, so does NOT change shots/builds. Safe and reversible. Applied only to active physical cards.
+A gravacao de replay grava em disco durante a partida. Desligue em Configuracoes > Jogo > Replays. O script pode apagar os .replay antigos (pede confirmacao, nao tem desfazer).	Replay recording writes to disk during match. Turn off at Settings > Gameplay > Replays. Script can delete old .replay files (asks for confirmation, no undo).
+~Upscaling (DLSS/FSR/XeSS/TSR): renderiza em resolucao menor. Se a GPU e o gargalo, mais FPS = menos latencia. O TSR custa alguns ms por quadro, prefira DLSS/FSR/XeSS se tiver.	~Upscaling (DLSS/FSR/XeSS/TSR): renders at lower resolution. If GPU is bottleneck, more FPS = less latency. TSR costs some ms per frame, prefer DLSS/FSR/XeSS if available.
++Core Ultra 200S (Arrow Lake): Windows e BIOS atualizados corrigiram a latencia de memoria do lancamento. O perfil "200S Boost" e opcional (overclock oficial, aumenta limites).	+Core Ultra 200S (Arrow Lake): updated Windows and BIOS fixed the launch memory latency. The "200S Boost" profile is optional (official overclock, raises limits).
+Tira o DSP (EQ/loudness) do caminho do som. Parte das chaves e protegida pelo Windows. O script muda onde da e avisa o resto (desligue em Som > Propriedades > Aprimoramentos).	Removes DSP (EQ/loudness) from audio path. Some keys are protected by Windows. Script changes where it can and warns about the rest (turn off in Sound > Properties > Enhancements).
++2 pentes (dual channel) com XMP/EXPO LIGADO. Pente unico ou RAM em velocidade JEDEC (2133/2400 DDR4, 4800 DDR5) derruba o 1% low. Com GPU integrada a perda chega a 40-60%.	+2 sticks (dual channel) with XMP/EXPO ON. Single stick or RAM at JEDEC speed (2133/2400 DDR4, 4800 DDR5) tanks the 1% low. With integrated GPU the loss reaches 40-60%.
+Menos trafego/DNS inesperado em segundo plano. Teredo desligado pode afetar alguns jogos P2P do Xbox/Microsoft Store. O Fortnite usa servidores da Epic e nao depende dele.	Less unexpected traffic/DNS in the background. Teredo disabled can affect some Xbox/Microsoft Store P2P games. Fortnite uses Epic servers and doesn't depend on it.
+Configuracao saudavel e conservadora. Em geral o Windows ja vem assim. Util p/ desfazer ajustes ruins de "otimizadores de internet". Guarda os valores atuais.	Healthy and conservative configuration. Generally Windows comes like this. Useful to undo bad adjustments from "internet optimizers". Saves current values.
+Estado atual do MSI: {0}. (PADRAO = o driver decide. NVIDIA moderna e a maioria das placas de rede/USB ja usam MSI sozinhas.) Enter alterna este dispositivo.	Current MSI state: {0}. (DEFAULT = driver decides. Modern NVIDIA and most network/USB cards already use MSI on their own.) Enter toggles this device.
+Menos trabalho para o DWM. Ganho real so em GPU integrada/PC fraco (+2 a 5% FPS). Em GPU dedicada e minimo. Muda a aparencia do Windows (sem transparencia).	Less work for DWM. Real gain only on integrated GPU/weak PC (+2 to 5% FPS). On dedicated GPU it's minimal. Changes Windows appearance (no transparency).
+A ferramenta certa para PROVAR se um tweak ajudou: captura frametime, 1%/0.1% lows e (com PresentMon) latencia. Compare antes/depois. Sem medir e placebo.	The right tool to PROVE if a tweak helped: captures frametime, 1%/0.1% lows and (with PresentMon) latency. Compare before/after. Without measuring it's placebo.
+~C-States: padrao (ligado) e o mais equilibrado. Desligar tira o atraso de despertar, mas esquenta. Evidencia de ganho media/fraca. Meca com o LatencyMon.	~C-States: default (on) is the most balanced. Disabling removes wake latency but heats up. Evidence of gain is medium/weak. Measure with LatencyMon.
+~No Diagnostico ha um teste de ping/jitter para os servidores da Epic (ICMP. O jogo usa UDP, entao serve como base). Jitter abaixo de 10 ms e bom.	~In Diagnostics there's a ping/jitter test for Epic's servers (ICMP. The game uses UDP so it's a baseline). Jitter below 10 ms is good.
+Mexe em MUITAS configuracoes de privacidade do Windows. Ganho de FPS desprezivel. Use so por privacidade e crie o ponto de restauracao por ele.	Tweaks MANY Windows privacy settings. FPS gain negligible. Use only for privacy and create a restore point through it.
+~Nagle, reserva de QoS de 20% e NetworkThrottlingIndex: o gameplay e UDP. Ganhos pequenos ou nulos. Estao no menu como opcionais e reversiveis.	~Nagle, 20% QoS reserve, and NetworkThrottlingIndex: gameplay is UDP. Small or no gains. They're in the menu as optional and reversible.
+Com somente-leitura, mudar opcoes DENTRO do jogo nao salva. Fluxo certo: configure tudo, congele, jogue. Para mudar, libere (Desfazer) antes.	With read-only, changing options INSIDE the game won't save. Right flow: configure all, freeze, play. To change, release (Undo) first.
+~Anti-Lag (classico, do driver): so age em DX11. Com o Fortnite em DX12/Modo Desempenho ele nao faz efeito. Pode deixar ligado sem problema.	~Anti-Lag (classic, from driver): only works in DX11. With Fortnite in DX12/Performance Mode it has no effect. You can leave it on safely.
+!DisableDynamicPstate "obrigatorio": quase igual ao "Preferir desempenho maximo" no jogo. So aumenta consumo parado (opcional no menu GPU).	!DisableDynamicPstate "mandatory": almost the same as "Prefer maximum performance" in-game. Only increases idle power draw (optional in GPU menu).
+!Desligar mitigacoes Spectre em CPU recente: ganho ~0 e perda real de seguranca (em CPU antiga ha algum ganho. Item de risco no menu CPU).	!Disable Spectre mitigations on recent CPU: ~0 gain and real security loss (on older CPU there's some gain. Risk item in CPU menu).
+Honesto: a reserva de 20% so existe quando algum app usa QoS. Na pratica e mito/placebo. Mantido por compatibilidade, inofensivo.	Honest: the 20% reserve only exists when some app uses QoS. In practice it's myth/placebo. Kept for compatibility, harmless.
++Cache de shader (Configuracoes globais): padrao do driver ou Ilimitado em SSD. Evita engasgo de recompilacao. Nao muda latencia.	+Shader cache (Global settings): driver default or Unlimited on SSD. Avoids recompilation stutter. Doesn't change latency.
+!Anti-Lag 2: o Fortnite NAO suporta (precisa integracao no jogo. Lista oficial da AMD: CS2, Dota 2, Ghost of Tsushima).	!Anti-Lag 2: Fortnite does NOT support it (needs in-game integration. AMD's official list: CS2, Dota 2, Ghost of Tsushima).
++Nao baixar/streamar junto (bufferbloat). Se o roteador tiver SQM/QoS (fq_codel/cake), ligue. Ou limite a banda a ~90%.	+Don't download/stream together (bufferbloat). If your router has SQM/QoS (fq_codel/cake), enable it. Or limit bandwidth to ~90%.
+Politica de sincronia do TSC entre nucleos. Evidencia fraca/mista. Alguns dizem que ajuda a estabilizar frametime.	TSC sync policy between cores. Weak/mixed evidence. Some say it helps stabilize frametime.
+O padrao do Windows cliente (2) ja resolve para curto+variavel. 0x26 e quase igual ao padrao. Efeito pequeno.	Windows client default (2) already resolves to short+variable. 0x26 is almost the same as default. Small effect.
+Sua tela chega a {0} Hz em outra resolucao. Teste trocar a resolucao ou crie o modo com CRU / Painel da GPU.	Your display reaches {0} Hz at another resolution. Try changing resolution or create the mode with CRU / GPU Control Panel.
+(com o timer forcado ativo a media fica perto de 1-2 ms. Sem ele ~15 ms. No Win11 o pedido e por processo,	(with forced timer active the average is around 1-2 ms. Without it ~15 ms. On Win11 the request is per process,
++Resizable BAR ligado se a GPU suportar (RTX 30+, RX 6000+, Intel Arc. Na Arc e praticamente obrigatorio).	+Resizable BAR on if your GPU supports it (RTX 30+, RX 6000+, Intel Arc. On Arc it's practically mandatory).
+!Desligar a compressao de memoria (MMAgent): teste controlado nao achou ganho. Com 8-16 GB pode piorar.	!Disable memory compression (MMAgent): controlled test found no gain. With 8-16 GB it can make it worse.
+DNS NAO muda o ping dentro da partida (o jogo fala por IP/UDP). Acelera login, loja e matchmaking.	DNS does NOT change ping in-game (game speaks via IP/UDP). Speeds up login, shop and matchmaking.
+Trocar para {0}x{1} @ {2} Hz agora? (a tela pisca. Volta sozinha se voce nao confirmar em 15 s)	Switch to {0}x{1} @ {2} Hz now? (screen flickers. Reverts itself if you don't confirm in 15 s)
+{0} dispositivo(s) protegido(s) pelo Windows, nesses use Som > Propriedades > Aprimoramentos.	{0} device(s) protected by Windows, on those use Sound > Properties > Enhancements.
+plano: X3D 2 CCDs NAO mexe em core parking. Classico trava minimo 100. Hibrido prefere P-cores	plan: X3D 2 CCDs does NOT touch core parking. Classic minimum 100 lock. Hybrid prefers P-cores
+VBS/Integridade de memoria esta ATIVA (custa FPS em alguns jogos. E uma troca com seguranca).	VBS/Memory Integrity is ACTIVE (costs FPS on some games. It's a trade-off with security).
++Otimizacao com threads: Automatico (so tem efeito em DX11/OpenGL. O Fortnite atual e DX12).	+Thread optimization: Automatic (only affects DX11/OpenGL. Current Fortnite is DX12).
+!TCP tweaks para ping in-game: o Fortnite joga por UDP. TCP so pesa em login/loja/downloads.	!TCP tweaks for in-game ping: Fortnite plays via UDP. TCP only matters for login/shop/downloads.
++PBO ligado. Curve Optimizer negativo (com teste de estabilidade) da mais boost sustentado.	+PBO on. Negative Curve Optimizer (with stability testing) gives more sustained boost.
+!"Baixa latencia" (XeLL) so age se o jogo integrar o XeLL. No Fortnite nao ha confirmacao.	!"Low latency" (XeLL) only works if the game integrates XeLL. No confirmation on Fortnite.
+!DisablePagingExecutive=1: afeta um grupo minusculo de drivers. Com pouca RAM pode piorar.	!DisablePagingExecutive=1: affects a tiny group of drivers. With little RAM it can make it worse.
++Modo de baixa latencia: Ultra (vale para jogos SEM Reflex. No Fortnite o Reflex assume).	+Low latency mode: Ultra (applies to games WITHOUT Reflex. In Fortnite Reflex takes over).
+Instala/abre direto por aqui. So programas oficiais. Nada e instalado sem voce escolher.	Install/open directly from here. Official programs only. Nothing is installed without your choice.
++BIOS atualizada. Anote o valor original de tudo que mudar. Nomes variam por fabricante.	+BIOS updated. Note the original value of everything you change. Names vary by manufacturer.
+Menos DPC/ISR compartilhado = menos micro-stutter. O ganho tipico e pequeno. Exige reboot.	Less shared DPC/ISR = less micro-stutter. Typical gain is small. Requires reboot.
++Use o Hz MAXIMO (60 Hz = 16,7 ms entre quadros, 144 Hz = 6,9 ms, 240 Hz = 4,2 ms).	+Use the MAXIMUM Hz (60 Hz = 16.7 ms between frames, 144 Hz = 6.9 ms, 240 Hz = 4.2 ms).
++Banda 5 GHz ou 6 GHz (Wi-Fi 6E), perto do roteador e sem paredes. Canal limpo.	+Band 5 GHz or 6 GHz (Wi-Fi 6E), near the router and no walls. Clean channel.
++Intel Graphics Software: modo de energia desempenho maximo. Sync desligado.	+Intel Graphics Software: power mode maximum performance. Sync off.
+O Windows so cria 1 ponto a cada 24 h. Seguimos com os backups proprios.	Windows only creates 1 point every 24 h. We continue with our own backups.
+Caminho do arquivo .pow (arraste o arquivo para ca. Vazio = cancelar)	Path to .pow file (drag file here. Empty = cancel)
+High performance (menos custo de textura, diferenca visual minima).	High performance (lower texture cost, minimal visual difference).
+Criando ponto de restauracao (pode levar ~30 s. Ok se falhar)...	Creating restore point (may take ~30 s. Ok if it fails)...
+sem resposta ICMP (o jogo usa UDP. Pode estar bloqueado)	no ICMP response (the game uses UDP. May be blocked)
+catalogo: toggle tem Apply ou RegsFn. Action tem Apply	catalog: toggle has Apply or RegsFn. Action has Apply
+O Profile Inspector demorou. Conferindo mesmo assim.	Profile Inspector took a while. Checking anyway.
+Nao consegui copiar. Digite manualmente.	Could not copy. Type manually.
+menu: cabecalho e ignorado. Esc volta -1	menu: header is ignored. Esc returns -1
+(classica 4:3, modelos mais largos)	(classic 4:3, wider models)
+Sem nativa salva. Usando 1920x1080.	No native saved. Using 1920x1080.
+(a do Peterbot, boa p/ comecar)	(Peterbot's, good to start)
+[MODO TESTE, nada e gravado]	[TEST MODE, nothing is written]
 '@
 
 # =====================================================================
@@ -2071,7 +2152,7 @@ function Write-HeaderFrame {
     Write-SegLine $top; $n++
     # titulo
     $tag = ''
-    if ($script:Dry -and $env:FNO_SHOT -ne '1') { $tag = (L '[MODO TESTE - nada e gravado]') + ' ' }
+    if ($script:Dry -and $env:FNO_SHOT -ne '1') { $tag = (L '[MODO TESTE, nada e gravado]') + ' ' }
     $tw = $W - 5 - $tag.Length - 1
     Write-Host $g.DV -NoNewline -ForegroundColor $fc
     Write-Host (' ' + $g.Ptr + ' ') -NoNewline -ForegroundColor Magenta
@@ -3372,7 +3453,7 @@ function Show-TimerStatus {
     $s = [FnoNative]::MeasureSleep(30)
     Say ('  Timer do Windows: melhor possivel = {0:N3} ms | padrao = {1:N3} ms | atual (neste processo) = {2:N3} ms' -f ($t[1] / 10000.0), ($t[0] / 10000.0), ($t[2] / 10000.0)) 'Gray'
     Say ('  Sleep(1) real: media {0:N2} ms, pior {1:N2} ms' -f $s[0], $s[1]) 'Gray'
-    Say '  (com o timer forcado ativo a media fica perto de 1-2 ms; sem ele ~15 ms. No Win11 o pedido e por processo,' 'DarkGray'
+    Say '  (com o timer forcado ativo a media fica perto de 1-2 ms. Sem ele ~15 ms. No Win11 o pedido e por processo,' 'DarkGray'
     Say '   a chave global do item "Timer global" faz o pedido do jogo valer para o sistema todo.)' 'DarkGray'
 }
 
@@ -3385,8 +3466,8 @@ function Apply-PriSep {
         '38 (0x26)  curto + variavel + boost 3:1',
         '42 (0x2A)  curto + FIXO + boost 3:1  (mais agressivo)',
         '2  (padrao do Windows cliente)') -Descs @(
-        'O padrao do Windows cliente (2) ja resolve para curto+variavel; 0x26 e quase igual ao padrao. Efeito pequeno.',
-        'Quantum fixo: alguns relatam menos latencia e melhor 1% low; em PC com muita coisa aberta pode prejudicar multitarefa. Testes independentes nao mostram diferenca estatistica clara.',
+        'O padrao do Windows cliente (2) ja resolve para curto+variavel. 0x26 e quase igual ao padrao. Efeito pequeno.',
+        'Com quantum fixo, alguns relatam menos latencia e melhor 1% low. Em PC com muita coisa aberta pode prejudicar multitarefa. Testes independentes nao mostram diferenca estatistica clara.',
         'Volta ao valor padrao.')
     if ($idx -lt 0) { return $false }
     $v = @(38, 42, 2)[$idx]
@@ -3475,13 +3556,13 @@ function Menu-Msi {
     while ($true) {
         $targets = @(Get-MsiTargets)
         $items = @()
-        $items += @{ Label = 'ATIVAR MSI em todos os dispositivos abaixo que ainda nao estao ON'; Desc = 'Grava MSISupported=1 na chave do dispositivo (o mesmo que o MSI Utility faz). Precisa reiniciar. Se algum driver nao suportar MSI o Windows ignora; em caso raro de tela preta, entre no Modo Seguro e use Desfazer/Restaurar.'; Badges = @() }
+        $items += @{ Label = 'ATIVAR MSI em todos os dispositivos abaixo que ainda nao estao ON'; Desc = 'Grava MSISupported=1 na chave do dispositivo (o mesmo que o MSI Utility faz). Precisa reiniciar. Se algum driver nao suportar MSI o Windows ignora. Em caso raro de tela preta, entre no Modo Seguro e use Desfazer/Restaurar.'; Badges = @() }
         foreach ($t in $targets) {
             $st = Get-MsiState $t.Id
-            $items += @{ Label = ('{0}: {1}' -f (L $t.Kind), $t.Name); Desc = ('Estado atual do MSI: {0}. (PADRAO = o driver decide; NVIDIA moderna e a maioria das placas de rede/USB ja usam MSI sozinhas.) Enter alterna este dispositivo.' -f $st); State = $st; Badges = @() }
+            $items += @{ Label = ('{0}: {1}' -f (L $t.Kind), $t.Name); Desc = ('Estado atual do MSI: {0}. (PADRAO = o driver decide. NVIDIA moderna e a maioria das placas de rede/USB ja usam MSI sozinhas.) Enter alterna este dispositivo.' -f $st); State = $st; Badges = @() }
         }
         $items += @{ Label = 'Voltar'; Desc = ''; Badges = @() }
-        $i = Show-Menu -Title 'MSI MODE (interrupcoes)' -Sub 'Menos DPC/ISR compartilhado = menos micro-stutter. Ganho tipico: pequeno. Exige reboot.' -Items $items
+        $i = Show-Menu -Title 'MSI MODE (interrupcoes)' -Sub 'Menos DPC/ISR compartilhado = menos micro-stutter. O ganho tipico e pequeno. Exige reboot.' -Items $items
         if ($i -lt 0 -or $i -eq ($items.Count - 1)) { return }
         if ($i -eq 0) {
             foreach ($t in $targets) {
@@ -3540,7 +3621,7 @@ function Apply-AudioFx {
         } catch { $fail++ }
     }
     if ($ok -gt 0) { Say-Ok ('Enhancements desligados em {0} dispositivo(s).' -f $ok) }
-    if ($fail -gt 0) { Say-Warn ('{0} dispositivo(s) protegido(s) pelo Windows - nesses use Som > Propriedades > Aprimoramentos.' -f $fail) }
+    if ($fail -gt 0) { Say-Warn ('{0} dispositivo(s) protegido(s) pelo Windows, nesses use Som > Propriedades > Aprimoramentos.' -f $fail) }
     return ($ok -gt 0)
 }
 function Undo-AudioFx {
@@ -3602,7 +3683,7 @@ function Menu-Bcd {
         'Garantir que useplatformclock NAO esta forcado (apaga o valor)',
         'DESFAZER tudo (volta ao padrao)') -Descs @(
         'Desliga o tick dinamico: agenda em intervalos fixos. Mais previsivel, mais consumo em idle. Ja causou queda de FPS em relatos de Overclock.net/Blur Busters.',
-        'Politica de sincronia do TSC entre nucleos. Evidencia fraca/mista; alguns dizem que ajuda a estabilizar frametime.',
+        'Politica de sincronia do TSC entre nucleos. Evidencia fraca/mista. Alguns dizem que ajuda a estabilizar frametime.',
         'Windows moderno ja NAO forca o HPET por padrao. Este item so apaga o valor caso alguem tenha ligado (nao ha ganho em ligar).',
         'Restaura o valor anterior (ou apaga o valor) dos tres itens.')
     switch ($i) {
@@ -3624,11 +3705,11 @@ function Action-MaxRefresh {
     Say ('  Maximo que o Windows oferece nesta resolucao: {0} Hz (em qualquer resolucao: {1} Hz)' -f $d.MaxHz, $d.MaxHzAny) 'White'
     if ($d.MaxHz -le $d.Hz) {
         Say-Ok 'Ja esta no maximo dessa resolucao.'
-        if ($d.MaxHzAny -gt $d.Hz) { Say-Info ('Sua tela chega a {0} Hz em outra resolucao; teste trocar a resolucao ou crie o modo com CRU / Painel da GPU.' -f $d.MaxHzAny) }
+        if ($d.MaxHzAny -gt $d.Hz) { Say-Info ('Sua tela chega a {0} Hz em outra resolucao. Teste trocar a resolucao ou crie o modo com CRU / Painel da GPU.' -f $d.MaxHzAny) }
         else { Say-Info 'Se o monitor tem mais Hz que isso, use cabo DisplayPort, ative a taxa no menu OSD do monitor e/ou crie o modo no painel da GPU.' }
         return $true
     }
-    if (-not (Confirm-Action ('Trocar para {0}x{1} @ {2} Hz agora? (a tela pisca; volta sozinha se voce nao confirmar em 15 s)' -f $d.W, $d.H, $d.MaxHz) $true)) { return $false }
+    if (-not (Confirm-Action ('Trocar para {0}x{1} @ {2} Hz agora? (a tela pisca. Volta sozinha se voce nao confirmar em 15 s)' -f $d.W, $d.H, $d.MaxHz) $true)) { return $false }
     if ($script:Dry) { Say-Dry ('SetMode {0}x{1}@{2}' -f $d.W, $d.H, $d.MaxHz); return $true }
     $t = [FnoNative]::SetMode([uint32]$d.W, [uint32]$d.H, [uint32]$d.MaxHz, $true)
     if ($t -ne 0) { Say-Bad ('O driver recusou o modo (codigo ' + $t + ').'); return $false }
@@ -3645,7 +3726,7 @@ function Action-MaxRefresh {
 function Register-WindowsTweaks {
     Add-Tweak @{ Id = 'refresh'; Group = 'lag'; Kind = 'action'; Level = 1; Evidence = 'forte'
         Name = 'Taxa de atualizacao da tela no MAXIMO'
-        Desc = 'Maior ganho isolado de latencia: cada Hz a mais reduz o tempo entre quadros (60Hz = 16,7 ms; 144Hz = 6,9 ms; 240Hz = 4,2 ms). Detecta o maior Hz que o Windows oferece e troca com teste e confirmacao (volta sozinho se a tela ficar preta).'
+        Desc = 'O maior ganho isolado de latencia e que cada Hz a mais reduz o tempo entre quadros (60Hz = 16,7 ms, 144Hz = 6,9 ms, 240Hz = 4,2 ms). Detecta o maior Hz que o Windows oferece e troca com teste e confirmacao (volta sozinho se a tela ficar preta).'
         Apply = { Action-MaxRefresh } }
     Add-Tweak @{ Id = 'gamemode'; Group = 'lag'; Level = 1; Evidence = 'media'
         Name = 'Game Mode ON + gravacao em 2o plano (Game DVR) OFF'
@@ -3653,7 +3734,7 @@ function Register-WindowsTweaks {
         RegsFn = { Get-GameModeRegs } }
     Add-Tweak @{ Id = 'power'; Group = 'cpu'; Level = 1; Evidence = 'media'
         Name = 'Plano de energia OTIMIZADO (perfil automatico do seu CPU)'
-        Desc = 'Cria/atualiza o plano "Fortnite Otimizador" com ~20 configuracoes avancadas conferidas no SEU Windows (boost agressivo, EPP maximo, sem core parking, USB/USB3/PCIe/Wi-Fi/HD sem economia, resfriamento ativo, Power Throttling OFF). O perfil muda conforme o CPU: Intel classico, Intel hibrido P+E, Ryzen, Ryzen X3D de 2 CCDs (que NAO pode desestacionar nucleos). Seu plano atual nao e alterado; o Desfazer volta pra ele. Veja o item abaixo para escolher/exportar/importar.'
+        Desc = 'Cria/atualiza o plano "Fortnite Otimizador" com ~20 configuracoes avancadas conferidas no SEU Windows (boost agressivo, EPP maximo, sem core parking, USB/USB3/PCIe/Wi-Fi/HD sem economia, resfriamento ativo, Power Throttling OFF). O perfil muda conforme o CPU: Intel classico, Intel hibrido P+E, Ryzen, Ryzen X3D de 2 CCDs (que NAO pode desestacionar nucleos). Seu plano atual nao e alterado. O Desfazer volta pra ele. Veja o item abaixo para escolher/exportar/importar.'
         Check = { Test-PowerPlanActive }; Apply = { Apply-Power }; Undo = { Undo-Power } }
     Add-Tweak @{ Id = 'power_menu'; Group = 'cpu'; Kind = 'action'; Level = 1; Evidence = 'media'
         Name = 'Plano de energia: escolher perfil, ver tudo, EXPORTAR / IMPORTAR .pow'
@@ -3665,15 +3746,15 @@ function Register-WindowsTweaks {
         RegsFn = { Get-TimerGlobalRegs } }
     Add-Tweak @{ Id = 'timerforce'; Group = 'cpu'; Level = 2; Evidence = 'media'
         Name = 'Timer FORCADO no minimo (tarefa agendada, sem baixar .exe)'
-        Desc = 'Tarefa no logon (PowerShell nativo, 0 download) que pede a MENOR resolucao possivel via NtSetTimerResolution. Custo real: CPU acorda ~2000x/s em vez de ~64x/s, mais consumo em idle e bateria. Combine com o item acima; se o jogo ja pede sozinho, o ganho extra e pequeno. Use "Medir timer" no Diagnostico para conferir.'
+        Desc = 'Tarefa no logon (PowerShell nativo, 0 download) que pede a MENOR resolucao possivel via NtSetTimerResolution. Custo real: CPU acorda ~2000x/s em vez de ~64x/s, mais consumo em idle e bateria. Combine com o item acima. Se o jogo ja pede sozinho, o ganho extra e pequeno. Use "Medir timer" no Diagnostico para conferir.'
         Check = { Test-TimerTask }; Apply = { Apply-TimerForce }; Undo = { Undo-TimerForce } }
     Add-Tweak @{ Id = 'mouse'; Group = 'lag'; Level = 1; Evidence = 'forte'
         Name = 'Mouse 1:1 no Windows (Enhance Pointer Precision OFF)'
-        Desc = 'HONESTO: o Fortnite usa raw input e NAO tem aceleracao de mouse no PC, entao isto NAO muda a mira dentro do jogo; so deixa o cursor de desktop/menu/loja 1:1. Para a mira o que importa: DPI fixo (400-1600), polling 1000 Hz+ no software do mouse e sensibilidade no proprio jogo.'
+        Desc = 'Honesto: o Fortnite usa raw input e NAO tem aceleracao de mouse no PC, entao isto NAO muda a mira dentro do jogo. So deixa o cursor de desktop/menu/loja 1:1. Para a mira o que importa: DPI fixo (400-1600), polling 1000 Hz+ no software do mouse e sensibilidade no proprio jogo.'
         RegsFn = { Get-MouseRegs } }
     Add-Tweak @{ Id = 'visualfx'; Group = 'lag'; Level = 1; Evidence = 'fraca'
         Name = 'Efeitos visuais do Windows no minimo (sem transparencia/animacao)'
-        Desc = 'Menos trabalho para o DWM. Ganho real so em GPU integrada/PC fraco (+2 a 5% FPS); em GPU dedicada e minimo. Muda a aparencia do Windows (sem transparencia).'
+        Desc = 'Menos trabalho para o DWM. Ganho real so em GPU integrada/PC fraco (+2 a 5% FPS). Em GPU dedicada e minimo. Muda a aparencia do Windows (sem transparencia).'
         RegsFn = { Get-VisualRegs } }
     Add-Tweak @{ Id = 'gpupref'; Group = 'lag'; Level = 1; Evidence = 'media'
         Name = 'Fortnite sempre na GPU de alto desempenho (Configuracoes > Graficos)'
@@ -3681,19 +3762,19 @@ function Register-WindowsTweaks {
         RegsFn = { Get-GpuPrefRegs } }
     Add-Tweak @{ Id = 'fso'; Group = 'lag'; Level = 2; Evidence = 'media'
         Name = 'Fullscreen Optimizations OFF no exe do Fortnite'
-        Desc = 'Marca DISABLEDXMAXIMIZEDWINDOWEDMODE no exe. No Win11 24H2/25H2 o modo "Independent Flip" ja evita o compositor em muitos casos, entao o ganho hoje e menor que no Win10; o item so garante o comportamento antigo. Use tambem "Tela cheia" (nao janela) no jogo.'
+        Desc = 'Marca DISABLEDXMAXIMIZEDWINDOWEDMODE no exe. No Win11 24H2/25H2 o modo "Independent Flip" ja evita o compositor em muitos casos, entao o ganho hoje e menor que no Win10. O item so garante o comportamento antigo. Use tambem "Tela cheia" (nao janela) no jogo.'
         RegsFn = { Get-FsoRegs } }
     Add-Tweak @{ Id = 'mmcss'; Group = 'cpu'; Level = 2; Evidence = 'fraca'
         Name = 'MMCSS: prioridade "Games" + SystemResponsiveness=10'
-        Desc = 'Reserva mais CPU/GPU para tarefas multimidia registradas como Games. Nao ha prova de que o Fortnite use essa classe do MMCSS; efeito pequeno/nao comprovado. Mantido por ser seguro e reversivel.'
+        Desc = 'Reserva mais CPU/GPU para tarefas multimidia registradas como Games. Nao ha prova de que o Fortnite use essa classe do MMCSS. Efeito pequeno/nao comprovado. Mantido por ser seguro e reversivel.'
         RegsFn = { Get-MmcssRegs } }
     Add-Tweak @{ Id = 'prisep'; Group = 'cpu'; Level = 2; Evidence = 'fraca'; NoBulk = $true
         Name = 'Win32PrioritySeparation (fatia de CPU do app em foco)'
-        Desc = 'Tweak classico. O padrao do Windows cliente ja e "curto+variavel"; 38 (0x26) e quase igual. 42 (0x2A) usa quantum FIXO e e o unico que muda de verdade, com resultados mistos em testes. Voce escolhe o valor.'
+        Desc = 'Tweak classico. O padrao do Windows cliente ja e "curto+variavel". 38 (0x26) e quase igual. 42 (0x2A) usa quantum FIXO e e o unico que muda de verdade, com resultados mistos em testes. Voce escolhe o valor.'
         Check = { Check-PriSep }; Apply = { Apply-PriSep }; Undo = { Undo-PriSep } }
     Add-Tweak @{ Id = 'ifeo'; Group = 'cpu'; Level = 2; Evidence = 'media'
         Name = 'Prioridade ALTA fixa p/ o Fortnite (CPU + disco) via registro'
-        Desc = 'Grava PerfOptions (CpuPriorityClass=High, IoPriority=High) para o FortniteClient-Win64-Shipping.exe: o Windows ja cria o processo com prioridade alta, sem programa extra. O Easy Anti-Cheat bloqueia mudar prioridade de fora com o jogo aberto, mas isto e aplicado na criacao. Nao ha relato conhecido de ban por PerfOptions; a Epic nao documenta. Se o EAC reclamar, desfaca.'
+        Desc = 'Grava PerfOptions (CpuPriorityClass=High, IoPriority=High) para o FortniteClient-Win64-Shipping.exe: o Windows ja cria o processo com prioridade alta, sem programa extra. O Easy Anti-Cheat bloqueia mudar prioridade de fora com o jogo aberto, mas isto e aplicado na criacao. Nao ha relato conhecido de ban por PerfOptions. A Epic nao documenta. Se o EAC reclamar, desfaca.'
         RegsFn = { Get-IfeoRegs } }
     Add-Tweak @{ Id = 'hags'; Group = 'lag'; Level = 2; Evidence = 'media'; Reboot = $true; NoBulk = $true; Tags = @('NV', 'AMD', 'INTELGPU')
         Name = 'HAGS: agendamento de GPU acelerado por hardware'
@@ -3709,7 +3790,7 @@ function Register-WindowsTweaks {
         Apply = { Menu-Msi } }
     Add-Tweak @{ Id = 'audiofx'; Group = 'lag'; Level = 2; Evidence = 'fraca'
         Name = 'Audio: Enhancements do Windows OFF'
-        Desc = 'Tira o DSP (EQ/loudness) do caminho do som. Parte das chaves e protegida pelo Windows; o script muda onde da e avisa o resto (desligue em Som > Propriedades > Aprimoramentos).'
+        Desc = 'Tira o DSP (EQ/loudness) do caminho do som. Parte das chaves e protegida pelo Windows. O script muda onde da e avisa o resto (desligue em Som > Propriedades > Aprimoramentos).'
         Check = { $p = @(Get-AudioFxPaths | Where-Object { Test-Path -LiteralPath $_ }); if ($p.Count -eq 0) { return $null }; foreach ($x in $p) { try { $v = (Get-ItemProperty -LiteralPath $x -Name $script:AudioKey -ErrorAction Stop).($script:AudioKey); if ([int]$v -ne 1) { return $false } } catch { return $false } }; return $true }
         Apply = { Apply-AudioFx }; Undo = { Undo-AudioFx } }
     Add-Tweak @{ Id = 'cstates'; Group = 'cpu'; Level = 3; Evidence = 'fraca'; Tags = @('DESKTOP'); Reboot = $false
@@ -3718,11 +3799,11 @@ function Register-WindowsTweaks {
         Check = { $null }; Apply = { Apply-CStates }; Undo = { Undo-CStates } }
     Add-Tweak @{ Id = 'hid'; Group = 'lag'; Level = 3; Evidence = 'nenhuma'; Reboot = $true
         Name = 'Buffer de HID mouse/teclado = 32 (NAO COMPROVADO)'
-        Desc = 'MouseDataQueueSize/KeyboardDataQueueSize (padrao 100). Pesquisa dividida; varios testes nao acham ganho real e alguns chamam de placebo. Sem risco de quebrar (nao use menos de 16).'
+        Desc = 'MouseDataQueueSize/KeyboardDataQueueSize (padrao 100). Pesquisa dividida. Varios testes nao acham ganho real e alguns chamam de placebo. Sem risco de quebrar (nao use menos de 16).'
         RegsFn = { Get-HidRegs } }
     Add-Tweak @{ Id = 'vbs'; Group = 'lag'; Level = 3; Evidence = 'forte'; Reboot = $true
         Name = 'VBS / Integridade de memoria (HVCI) OFF  -  REDUZ SEGURANCA'
-        Desc = 'Microsoft e testes independentes mostram +5 a 15% FPS em alguns jogos ao desligar (varia muito; em CPU recente e menor). Custo: perde uma camada anti-malware de kernel e desliga Credential Guard. Se voce usa VirtualBox/WSL2/Hyper-V isso nao afeta. Depois confirme em Seguranca do Windows > Isolamento de nucleo. Updates grandes do Windows 11 (24H2/25H2) podem religar sozinho: reconfira o estado aqui apos cada atualizacao de versao. Reversivel.'
+        Desc = 'Microsoft e testes independentes mostram +5 a 15% FPS em alguns jogos ao desligar (varia muito. Em CPU recente e menor). Custo: perde uma camada anti-malware de kernel e desliga Credential Guard. Se voce usa VirtualBox/WSL2/Hyper-V isso nao afeta. Depois confirme em Seguranca do Windows > Isolamento de nucleo. Updates grandes do Windows 11 (24H2/25H2) podem religar sozinho. Reconfira o estado aqui apos cada atualizacao de versao. Reversivel.'
         RegsFn = { Get-VbsRegs } }
     Add-Tweak @{ Id = 'mpo'; Group = 'lag'; Level = 3; Evidence = 'fraca'; Reboot = $true; Tags = @('NV', 'AMD')
         Name = 'MPO (Multi-Plane Overlay) OFF - correcao de flicker/stutter'
@@ -3820,7 +3901,7 @@ function Undo-Nic {
 
 # --- DNS ----------------------------------------------------------------
 function Action-Dns {
-    $i = Select-Option -Title 'DNS' -Sub 'DNS NAO muda o ping dentro da partida (o jogo fala por IP/UDP); acelera login, loja e matchmaking.' -Options @(
+    $i = Select-Option -Title 'DNS' -Sub 'DNS NAO muda o ping dentro da partida (o jogo fala por IP/UDP). Acelera login, loja e matchmaking.' -Options @(
         'Cloudflare  1.1.1.1 / 1.0.0.1', 'Google  8.8.8.8 / 8.8.4.4', 'Quad9  9.9.9.9 / 149.112.112.112', 'Automatico (DHCP) - restaurar') -Descs @(
         'Geralmente o mais rapido no Brasil.', 'Muito estavel.', 'Bloqueia dominios maliciosos.', 'Volta a usar o DNS que o roteador/provedor entrega.')
     if ($i -lt 0) { return $false }
@@ -3976,7 +4057,7 @@ function Register-NetTweaks {
         Apply = { [void](Action-Nic) } }
     Add-Tweak @{ Id = 'nagle'; Group = 'net'; Level = 1; Evidence = 'fraca'
         Name = 'Nagle OFF + ACK imediato nas suas placas de rede'
-        Desc = 'TcpNoDelay/TcpAckFrequency=1 so afetam TCP (login, party, chat). O gameplay do Fortnite e UDP, entao NAO muda tiro/build. Seguro e reversivel; aplicado so as placas fisicas ativas.'
+        Desc = 'TcpNoDelay/TcpAckFrequency=1 so afetam TCP (login, party, chat). O gameplay do Fortnite e UDP, entao NAO muda tiro/build. Seguro e reversivel. Aplicado so as placas fisicas ativas.'
         RegsFn = { Get-NagleRegs } }
     Add-Tweak @{ Id = 'throttle'; Group = 'net'; Level = 2; Evidence = 'fraca'
         Name = 'NetworkThrottlingIndex OFF (ffffffff)'
@@ -3984,15 +4065,15 @@ function Register-NetTweaks {
         RegsFn = { Get-ThrottleRegs } }
     Add-Tweak @{ Id = 'qos'; Group = 'net'; Level = 2; Evidence = 'nenhuma'
         Name = 'QoS: reserva de banda 0% (NonBestEffortLimit=0)'
-        Desc = 'HONESTO: a reserva de 20% so existe quando algum app usa QoS; na pratica e mito/placebo. Mantido por compatibilidade, inofensivo.'
+        Desc = 'Honesto: a reserva de 20% so existe quando algum app usa QoS. Na pratica e mito/placebo. Mantido por compatibilidade, inofensivo.'
         RegsFn = { Get-QosRegs } }
     Add-Tweak @{ Id = 'tcp'; Group = 'net'; Level = 2; Evidence = 'fraca'
         Name = 'Pilha TCP: autotuning normal, RSS on, ECN off, timestamps off'
-        Desc = 'Configuracao saudavel e conservadora. Em geral o Windows ja vem assim; util p/ desfazer ajustes ruins de "otimizadores de internet". Guarda os valores atuais.'
+        Desc = 'Configuracao saudavel e conservadora. Em geral o Windows ja vem assim. Util p/ desfazer ajustes ruins de "otimizadores de internet". Guarda os valores atuais.'
         Check = { Check-Tcp }; Apply = { Apply-Tcp }; Undo = { Undo-Tcp } }
     Add-Tweak @{ Id = 'tunnels'; Group = 'net'; Level = 2; Evidence = 'fraca'
         Name = 'Desligar tuneis IPv6 legados (Teredo / 6to4 / ISATAP)'
-        Desc = 'Menos trafego/DNS inesperado em segundo plano. Teredo desligado pode afetar alguns jogos P2P do Xbox/Microsoft Store; o Fortnite usa servidores da Epic e nao depende dele.'
+        Desc = 'Menos trafego/DNS inesperado em segundo plano. Teredo desligado pode afetar alguns jogos P2P do Xbox/Microsoft Store. O Fortnite usa servidores da Epic e nao depende dele.'
         Check = { Check-Tunnels }; Apply = { Apply-Tunnels }; Undo = { Undo-Tunnels } }
     Add-Tweak @{ Id = 'lso'; Group = 'net'; Level = 2; Evidence = 'fraca'
         Name = 'Large Send Offload (LSO) OFF - REINICIA o adaptador'
@@ -4062,7 +4143,7 @@ $script:Apps = @(
     @{ Name = 'NVIDIA Profile Inspector'; Id = 'Orbmu2k.nvidiaProfileInspector'; Exe = 'nvidiaProfileInspector.exe'; Match = 'Profile Inspector'; Tags = @('NV')
        Desc = 'Edita os perfis do driver NVIDIA (o que o Painel de Controle esconde). O item "Perfil de baixa latencia" do menu NVIDIA usa a linha de comando dele (-silentImport) para aplicar tudo sem abrir nada. Codigo aberto (GitHub Orbmu2k).' },
     @{ Name = 'CapFrameX (medir FPS, frametime e latencia)'; Id = 'CXWorld.CapFrameX'; Exe = 'CapFrameX.exe'; Match = 'CapFrameX'; Tags = @('ALL')
-       Desc = 'A ferramenta certa para PROVAR se um tweak ajudou: captura frametime, 1%/0.1% lows e (com PresentMon) latencia. Compare antes/depois; sem medir e placebo.' },
+       Desc = 'A ferramenta certa para PROVAR se um tweak ajudou: captura frametime, 1%/0.1% lows e (com PresentMon) latencia. Compare antes/depois. Sem medir e placebo.' },
     @{ Name = 'LatencyMon (DPC/ISR)'; Id = 'Resplendence.LatencyMon'; Exe = 'LatMon.exe'; Match = 'LatencyMon'; Tags = @('ALL')
        Desc = 'Mostra qual driver causa picos de DPC/ISR (audio estalando, mouse pulando). Base para decidir sobre MSI Mode e drivers problematicos.' },
     @{ Name = 'ISLC (limpa a Standby List da RAM)'; Id = 'Wagnardsoft.ISLC'; Exe = 'ISLC.exe'; Match = 'standby list cleaner'; Tags = @('ALL')
@@ -4070,9 +4151,9 @@ $script:Apps = @(
     @{ Name = 'HWiNFO (temperaturas, clocks, sensores)'; Id = 'REALiX.HWiNFO'; Exe = 'HWiNFO64.exe'; Match = 'HWiNFO'; Tags = @('ALL')
        Desc = 'Confere se a CPU/GPU esta em thermal throttling depois de aplicar o plano de energia maximo.' },
     @{ Name = 'Process Lasso (regras de prioridade/afinidade)'; Id = 'BitSum.ProcessLasso'; Exe = 'ProcessLasso.exe'; Match = 'Process Lasso'; Tags = @('ALL')
-       Desc = 'Prioridade e afinidade persistentes por programa. Em CPU Intel hibrida (12a gen+) ou Ryzen de 2 CCDs ajuda a prender o jogo nos nucleos certos. O EAC pode bloquear mudar o jogo com ele aberto; use as regras para os OUTROS apps.' },
+       Desc = 'Prioridade e afinidade persistentes por programa. Em CPU Intel hibrida (12a gen+) ou Ryzen de 2 CCDs ajuda a prender o jogo nos nucleos certos. O EAC pode bloquear mudar o jogo com ele aberto. Use as regras para os OUTROS apps.' },
     @{ Name = 'RivaTuner Statistics Server (limitador de FPS)'; Id = 'Guru3D.RTSS'; Exe = 'RTSS.exe'; Match = 'RivaTuner'; Tags = @('ALL')
-       Desc = 'Limitador de FPS de menor variacao de frametime. O Fortnite ja tem limitador proprio + Reflex; RTSS e opcional e o overlay pode ser bloqueado pelo Easy Anti-Cheat. Use so se souber por que.' },
+       Desc = 'Limitador de FPS de menor variacao de frametime. O Fortnite ja tem limitador proprio + Reflex. RTSS e opcional e o overlay pode ser bloqueado pelo Easy Anti-Cheat. Use so se souber por que.' },
     @{ Name = 'MSI Afterburner (OC/undervolt/curva de ventoinha)'; Id = 'Guru3D.Afterburner'; Exe = 'MSIAfterburner.exe'; Match = 'Afterburner'; Tags = @('NV', 'AMD')
        Desc = 'Ajuste de clock/voltagem/ventoinha. Undervolt = menos calor e clocks mais estaveis (menos throttling).' },
     @{ Name = 'Display Driver Uninstaller (DDU)'; Id = 'Wagnardsoft.DisplayDriverUninstaller'; Exe = 'Display Driver Uninstaller.exe'; Match = 'Display Driver Uninstaller'; Tags = @('ALL')
@@ -4086,7 +4167,7 @@ $script:Apps = @(
     @{ Name = 'CrystalDiskInfo (saude do SSD/HD)'; Id = 'CrystalDewWorld.CrystalDiskInfo'; Exe = 'DiskInfo64.exe'; Match = 'CrystalDiskInfo'; Tags = @('ALL')
        Desc = 'Verifica a saude do disco onde o Fortnite esta instalado.' },
     @{ Name = 'O&O ShutUp10++ (privacidade/telemetria)'; Id = 'OO-Software.ShutUp10'; Exe = 'OOSU10.exe'; Match = 'ShutUp10'; Tags = @('ALL')
-       Desc = 'Mexe em MUITAS configuracoes de privacidade do Windows. Ganho de FPS desprezivel; use so por privacidade e crie o ponto de restauracao por ele.' }
+       Desc = 'Mexe em MUITAS configuracoes de privacidade do Windows. Ganho de FPS desprezivel. Use so por privacidade e crie o ponto de restauracao por ele.' }
 )
 function Menu-Apps {
     $script:InstalledCache = $null
@@ -4104,7 +4185,7 @@ function Menu-Apps {
             $items += @{ Label = $lbl; Desc = ($a.Desc + '  [winget: ' + $a.Id + ']'); Badges = (Get-TagBadges $a.Tags); State = $st; Na = $na; App = $a }
         }
         $items += @{ Label = 'Voltar'; Desc = ''; Badges = @() }
-        $i = Show-Menu -Title 'PROGRAMAS E INTEGRACOES (winget)' -Sub 'Instala/abre direto por aqui. So programas oficiais; nada e instalado sem voce escolher.' -Items $items -Art 'apps'
+        $i = Show-Menu -Title 'PROGRAMAS E INTEGRACOES (winget)' -Sub 'Instala/abre direto por aqui. So programas oficiais. Nada e instalado sem voce escolher.' -Items $items -Art 'apps'
         if ($i -lt 0 -or $i -ge $script:Apps.Count) { return }
         $a = $script:Apps[$i]
         $exe = Find-AppExe -ExeName $a.Exe -IdPrefix $a.Id
@@ -4158,7 +4239,7 @@ function Get-NpiSettings {
         @{ Name = 'Maximum pre-rendered frames';      Id = 0x007BA09E; Val = 1;    Why = 'Fila de quadros CPU->GPU = 1 (menos latencia).' },
         @{ Name = 'Ultra Low Latency - Enabled';      Id = 0x10835000; Val = 1;    Why = 'Liga o caminho Ultra Low Latency do driver. (Com Reflex ligado no jogo, o Reflex assume.)' },
         @{ Name = 'Ultra Low Latency - CPL State';    Id = 0x0005F543; Val = 2;    Why = 'Faz o Painel NVIDIA mostrar "Ultra".' },
-        @{ Name = 'Texture Filtering - Quality';      Id = 0x00CE2691; Val = 0x14; Why = 'High performance (menos custo de textura; diferenca visual minima).' },
+        @{ Name = 'Texture Filtering - Quality';      Id = 0x00CE2691; Val = 0x14; Why = 'High performance (menos custo de textura, diferenca visual minima).' },
         @{ Name = 'Preferred refresh rate';           Id = 0x0064B541; Val = 1;    Why = 'Highest available: garante o maior Hz da tela.' }
     )
 }
@@ -4216,7 +4297,7 @@ function Action-NvProfile {
         if ($after.Count -eq 0) { Say-Warn 'Nenhum perfil customizado para exportar (normal em instalacao limpa).' }
         [IO.File]::WriteAllText($nip, (New-NipXml $set), [Text.Encoding]::Unicode)
         $p2 = Start-Process -FilePath $exe -ArgumentList @('-silentImport', ('"' + $nip + '"')) -PassThru -WindowStyle Hidden
-        if (-not $p2.WaitForExit(60000)) { Say-Warn 'O Profile Inspector demorou; conferindo mesmo assim.'; try { $p2.Kill() } catch { } }
+        if (-not $p2.WaitForExit(60000)) { Say-Warn 'O Profile Inspector demorou. Conferindo mesmo assim.'; try { $p2.Kill() } catch { } }
         Say-Ok 'Perfil importado no driver.'
         Write-Log 'NVIDIA: perfil Fortnite importado via NPI'
         Say ''
@@ -4229,7 +4310,7 @@ function Action-NvClocks {
     $smi = Get-NvSmi
     if (-not $smi) { Say-Warn 'nvidia-smi nao encontrado (driver NVIDIA instalado?).'; return $false }
     $i = Select-Option -Title 'CLOCK DA GPU (nvidia-smi)' -Sub 'Vale so ate reiniciar. GTX 16 / RTX suportam.' -Options @('Travar faixa 75%-100% do boost maximo', 'Liberar (voltar ao automatico)') -Descs @(
-        'A GPU nunca desce abaixo de ~75% do clock maximo: some o atraso de "acordar" a GPU entre cenas leves e pesadas. Custo: mais calor/consumo em idle enquanto travado. Equivale a "Prefer maximum performance" mas mais rigido.',
+        'A GPU nunca desce abaixo de ~75% do clock maximo. Some o atraso de "acordar" a GPU entre cenas leves e pesadas. Custo: mais calor/consumo em idle enquanto travado. Equivale a "Prefer maximum performance" mas mais rigido.',
         'Executa nvidia-smi -rgc.')
     if ($i -lt 0) { return $false }
     if ($i -eq 1) { $r = Invoke-Native -File $smi -ArgList @('-i', '0', '-rgc'); if ($r.Dry -or $r.ExitCode -eq 0) { Say-Ok 'Clock liberado.' } else { Say-Bad $r.Output.Trim() }; return $true }
@@ -4440,7 +4521,7 @@ function Action-FnLaunch {
         'Copia texto vazio.')
     if ($i -lt 0) { return $false }
     $txt = @('-NOSPLASH', '-NOSPLASH -USEALLAVAILABLECORES', '')[$i]
-    if ($script:Dry) { Say-Dry ('clipboard: ' + $txt) } else { try { Set-Clipboard -Value $txt; Say-Ok ('Copiado para a area de transferencia: "' + $txt + '"') } catch { Say-Warn 'Nao consegui copiar; digite manualmente.' } }
+    if ($script:Dry) { Say-Dry ('clipboard: ' + $txt) } else { try { Set-Clipboard -Value $txt; Say-Ok ('Copiado para a area de transferencia: "' + $txt + '"') } catch { Say-Warn 'Nao consegui copiar. Digite manualmente.' } }
     $l = Get-EpicLauncher
     if ($l -and (Confirm-Action 'Abrir o Epic Launcher agora?' $true)) { if (-not $script:Dry) { Start-Process -FilePath $l } }
     return $true
@@ -4533,9 +4614,9 @@ function Menu-StretchRes {
         $items = @()
         foreach ($w in @(1440, 1650, 1680, 1720, 1750)) {
             $extra = ''
-            if ($w -eq 1720) { $extra = ' (a do Peterbot; boa p/ comecar)' }
-            if ($w -eq 1440) { $extra = ' (classica 4:3 - modelos mais largos)' }
-            $items += @{ Label = ('Preset {0}x1080{1}' -f $w, $extra); Desc = 'Menos pixels = mais FPS e modelos mais largos; custo: imagem mais borrada e menos visao lateral. Windows E Fortnite mudam juntos p/ nao dar conflito. Se o modo nao existir no driver, o script explica como criar (CRU / painel da GPU). Presets sao para monitor 1080p.'; Badges = @(); W = $w }
+            if ($w -eq 1720) { $extra = ' (a do Peterbot, boa p/ comecar)' }
+            if ($w -eq 1440) { $extra = ' (classica 4:3, modelos mais largos)' }
+            $items += @{ Label = ('Preset {0}x1080{1}' -f $w, $extra); Desc = 'Menos pixels = mais FPS e modelos mais largos. Custo: imagem mais borrada e menos visao lateral. Windows E Fortnite mudam juntos p/ nao dar conflito. Se o modo nao existir no driver, o script explica como criar (CRU / painel da GPU). Presets sao para monitor 1080p.'; Badges = @(); W = $w }
         }
         $items += @{ Label = 'Reverter para a resolucao nativa (Windows + Fortnite)'; Desc = 'Usa a nativa salva na 1a vez que voce aplicou um preset.'; Badges = @() }
         $items += @{ Label = 'Tela ficou quadrada / barras pretas? (como esticar)'; Desc = 'Guia de escala por marca de GPU.'; Badges = @() }
@@ -4570,7 +4651,7 @@ function Menu-StretchRes {
             $f = Get-NativeFile
             $nw = 1920; $nh = 1080; $nz = [int]$script:HW.Display.Hz
             if (Test-Path -LiteralPath $f) { $parts = (Get-Content -LiteralPath $f -Raw).Trim() -split '\s+'; if ($parts.Count -ge 3) { $nw = [int]$parts[0]; $nh = [int]$parts[1]; $nz = [int]$parts[2] } }
-            else { Say-Warn 'Sem nativa salva; usando 1920x1080.' }
+            else { Say-Warn 'Sem nativa salva. Usando 1920x1080.' }
             if ($script:Dry) { Say-Dry ('SetMode {0}x{1}@{2}' -f $nw, $nh, $nz) } else { [void][FnoNative]::SetMode([uint32]$nw, [uint32]$nh, [uint32]$nz, $false) }
             [void](Sync-FnResolution $nw $nh)
             Pause-Key
@@ -4692,11 +4773,11 @@ function Register-FnSysTweaks {
         Apply = { [void](Action-FnIni) } }
     Add-Tweak @{ Id = 'fn_engine'; Group = 'fn'; Level = 3; Evidence = 'nenhuma'
         Name = 'Engine.ini: r.OneFrameThreadLag / GTSyncType / GC (NAO COMPROVADO)'
-        Desc = 'r.OneFrameThreadLag=1 ja e o padrao da Unreal Engine e a Epic nao documenta Engine.ini como suportado (pode ignorar ou reverter). Efeito pratico desconhecido/nulo. Mantido so por compatibilidade; o desfazer remove exatamente as chaves adicionadas.'
+        Desc = 'r.OneFrameThreadLag=1 ja e o padrao da Unreal Engine e a Epic nao documenta Engine.ini como suportado (pode ignorar ou reverter). Efeito pratico desconhecido/nulo. Mantido so por compatibilidade. O desfazer remove exatamente as chaves adicionadas.'
         Check = { Check-FnEngine }; Apply = { Apply-FnEngine }; Undo = { Undo-FnEngine } }
     Add-Tweak @{ Id = 'fn_freeze'; Group = 'fn'; Level = 2; Evidence = '-'; NoBulk = $true
         Name = 'Congelar os INIs (somente-leitura) p/ o jogo nao desfazer o preset'
-        Desc = 'Com somente-leitura, mudar opcoes DENTRO do jogo nao salva. Fluxo certo: configure tudo, congele, jogue; para mudar, libere (Desfazer) antes.'
+        Desc = 'Com somente-leitura, mudar opcoes DENTRO do jogo nao salva. Fluxo certo: configure tudo, congele, jogue. Para mudar, libere (Desfazer) antes.'
         Check = { Check-FnFrozen }; Apply = { Apply-FnFreeze }; Undo = { Undo-FnFreeze } }
     Add-Tweak @{ Id = 'fn_res'; Group = 'fn'; Kind = 'action'; Level = 1; Evidence = 'media'
         Name = 'Resolucao esticada (presets de pro) - Windows + Fortnite juntos'
@@ -4712,7 +4793,7 @@ function Register-FnSysTweaks {
         Apply = { [void](Action-FnFocus) } }
     Add-Tweak @{ Id = 'fn_replays'; Group = 'fn'; Kind = 'action'; Level = 1; Evidence = '-'
         Name = 'Replays: desligar no jogo + apagar replays antigos'
-        Desc = 'A gravacao de replay grava em disco durante a partida; desligue em Configuracoes > Jogo > Replays. O script pode apagar os .replay antigos (pede confirmacao, nao tem desfazer).'
+        Desc = 'A gravacao de replay grava em disco durante a partida. Desligue em Configuracoes > Jogo > Replays. O script pode apagar os .replay antigos (pede confirmacao, nao tem desfazer).'
         Apply = { [void](Action-FnReplays) } }
     Add-Tweak @{ Id = 'fn_verify'; Group = 'fn'; Kind = 'action'; Level = 1; Evidence = '-'
         Name = 'Verificar arquivos do jogo + abrir pasta de configuracoes'
@@ -4745,7 +4826,7 @@ function Register-FnSysTweaks {
         Check = { Check-WuPause }; Apply = { Apply-WuPause }; Undo = { Undo-WuPause } }
     Add-Tweak @{ Id = 'defender'; Group = 'sys'; Level = 2; Evidence = 'fraca'; NoBulk = $true
         Name = 'Windows Defender: excluir SO as pastas do Fortnite'
-        Desc = 'AVISO DE SEGURANCA: exclusao reduz a protecao nessas pastas. So as pastas do jogo (instalacao + %LOCALAPPDATA%\FortniteGame). Ganho pequeno com o Defender padrao; maior com antivirus de terceiros pesado.'
+        Desc = 'Aviso de seguranca: exclusao reduz a protecao nessas pastas. So as pastas do jogo (instalacao + %LOCALAPPDATA%\FortniteGame). Ganho pequeno com o Defender padrao. Maior com antivirus de terceiros pesado.'
         Check = { Check-Defender }; Apply = { Apply-Defender }; Undo = { Undo-Defender } }
     Add-Tweak @{ Id = 'disks'; Group = 'sys'; Kind = 'action'; Level = 1; Evidence = '-'
         Name = 'SSD ou HD? (onde o Fortnite esta)'
@@ -4957,7 +5038,7 @@ function Action-PlanImport {
     Say '  Importa um plano de energia (.pow) que voce ja tenha (por exemplo o exportado por este programa).' 'White'
     Say '  Um .pow so contem configuracoes de energia (nao executa codigo), mas importe apenas de fontes em que confia.' 'Yellow'
     if (-not $script:UseKeys -or $script:AutoActive) { Say-Info 'Entrada de caminho indisponivel neste modo.'; return $false }
-    $p = Read-Host (L '  Caminho do arquivo .pow (arraste o arquivo para ca; vazio = cancelar)')
+    $p = Read-Host (L '  Caminho do arquivo .pow (arraste o arquivo para ca. Vazio = cancelar)')
     $p = ([string]$p).Trim().Trim('"')
     if (-not $p) { return $false }
     if (-not (Test-Path -LiteralPath $p) -or ([IO.Path]::GetExtension($p) -ne '.pow')) { Say-Bad 'Arquivo nao encontrado ou nao e .pow.'; return $false }
@@ -5122,7 +5203,7 @@ function Get-SpectreRegs {
 function Register-ExtraTweaks {
     Add-Tweak @{ Id = 'winopt'; Group = 'gpuall'; Level = 1; Evidence = 'forte'; Tags = @('WIN11')
         Name = 'Otimizacoes para jogos em janela (modelo FLIP no DX10/11)'
-        Desc = 'Configuracao oficial do Windows 11: jogos DirectX 10/11 em janela ou sem borda passam a apresentar quadros pelo modelo "flip", que tem menos latencia e libera VRR. HONESTO: no Fortnite atual (DirectX 12 e Modo Desempenho, que virou DX12 no patch 37.00) NAO muda nada; vale para outros jogos DX11 e para quem ainda usa DX11. Preserva os outros ajustes da mesma chave (Auto HDR, VRR).'
+        Desc = 'Configuracao oficial do Windows 11: jogos DirectX 10/11 em janela ou sem borda passam a apresentar quadros pelo modelo "flip", que tem menos latencia e libera VRR. Honesto: no Fortnite atual (DirectX 12 e Modo Desempenho, que virou DX12 no patch 37.00) NAO muda nada. Vale para outros jogos DX11 e para quem ainda usa DX11. Preserva os outros ajustes da mesma chave (Auto HDR, VRR).'
         RegsFn = { Get-WinOptRegs } }
     Add-Tweak @{ Id = 'nv_pstate'; Group = 'gpu'; Level = 2; Evidence = 'fraca'; Tags = @('NV', 'DESKTOP'); Reboot = $true; NoBulk = $true
         Name = 'NVIDIA: travar a GPU no P0 (DisableDynamicPstate) - clock maximo sempre'
@@ -5130,7 +5211,7 @@ function Register-ExtraTweaks {
         RegsFn = { Get-NvPstateRegs } }
     Add-Tweak @{ Id = 'spectre'; Group = 'cpu'; Level = 3; Evidence = 'mista'; Reboot = $true
         Name = 'Mitigacoes Spectre/Meltdown OFF  -  REDUZ SEGURANCA'
-        Desc = 'Desliga protecoes do kernel contra ataques de execucao especulativa (FeatureSettingsOverride=3). Ganho medido so em CPUs antigas (Intel ate a 8a/9a geracao, Ryzen 1000/2000), e mais em disco/rede do que em FPS; em CPU recente (Intel 12a+ / Ryzen 5000+) o ganho e praticamente zero. Custo: um programa malicioso pode ler memoria de outro processo. Nao recomendado para PC de uso geral. Reversivel.'
+        Desc = 'Desliga protecoes do kernel contra ataques de execucao especulativa (FeatureSettingsOverride=3). Ganho medido so em CPUs antigas (Intel ate a 8a/9a geracao, Ryzen 1000/2000), e mais em disco/rede do que em FPS. Em CPU recente (Intel 12a+ / Ryzen 5000+) o ganho e praticamente zero. Custo: um programa malicioso pode ler memoria de outro processo. Nao recomendado para PC de uso geral. Reversivel.'
         RegsFn = { Get-SpectreRegs } }
 }
 
@@ -5234,12 +5315,12 @@ function Get-GuideInGame {
         '#VIDEO > GRAFICOS',
         '+Resolucao 3D: 100%. Se precisar de FPS, baixe de 10 em 10.',
         '+Sombras, efeitos, pos-processamento, texturas: Baixo. Motion blur, Ray Tracing, Nanite, Lumen/GI e Reflexos: DESLIGADOS.',
-        '~Upscaling (DLSS/FSR/XeSS/TSR): renderiza em resolucao menor. Se a GPU e o gargalo, mais FPS = menos latencia; o TSR custa alguns ms por quadro, prefira DLSS/FSR/XeSS se tiver.',
+        '~Upscaling (DLSS/FSR/XeSS/TSR): renderiza em resolucao menor. Se a GPU e o gargalo, mais FPS = menos latencia. O TSR custa alguns ms por quadro, prefira DLSS/FSR/XeSS se tiver.',
         '!Frame Generation (DLSS FG, FSR FG, AFMF): ADICIONA latencia (insere quadro interpolado). Desligue no competitivo.',
         '+Mostrar FPS: ligado.',
         '',
         '#LATENCIA POR MARCA DE GPU (o que o Fortnite suporta de verdade)',
-        '+NVIDIA Reflex: "Ligado + Impulso". Ligado ja remove a fila de renderizacao; o Impulso tambem impede a GPU de baixar o clock entre quadros (ganho extra quando a GPU NAO esta em 99%, ex.: notebook, menus, FPS travado).',
+        '+NVIDIA Reflex: "Ligado + Impulso". Ligado ja remove a fila de renderizacao. O Impulso tambem impede a GPU de baixar o clock entre quadros (ganho extra quando a GPU NAO esta em 99%, ex.: notebook, menus, FPS travado).',
         '+Com Reflex ligado, o "Modo de baixa latencia" do painel NVIDIA e ignorado (nao faz mal deixar).',
         '!AMD Anti-Lag 2: o Fortnite NAO tem (lista oficial da AMD so traz CS2, Dota 2 e Ghost of Tsushima). O Anti-Lag classico do driver so funciona em DX11, e o Fortnite atual e DX12.',
         '!Intel XeLL (Xe Low Latency): sem confirmacao oficial no Fortnite. Nao conte com ele.',
@@ -5253,7 +5334,7 @@ function Get-GuideHardware {
         '#O QUE TEM MAIS IMPACTO QUE QUALQUER TWEAK DE REGISTRO',
         '',
         '#Monitor',
-        '+Use o Hz MAXIMO (60 Hz = 16,7 ms entre quadros; 144 Hz = 6,9 ms; 240 Hz = 4,2 ms).',
+        '+Use o Hz MAXIMO (60 Hz = 16,7 ms entre quadros, 144 Hz = 6,9 ms, 240 Hz = 4,2 ms).',
         '+Cabo DisplayPort (HDMI antigo limita o Hz). Overdrive MEDIO no menu do monitor: alto demais gera rastro invertido (so visual).',
         '~ULMB/strobing (piscar o backlight) reduz o BORRAO de movimento, nao a latencia de clique-a-foton. Nao combine com overdrive alto.',
         '',
@@ -5262,7 +5343,7 @@ function Get-GuideHardware {
         '+DPI fixo (400 a 1600) e sensibilidade no jogo. Sem hub USB. Sem fio: dongle 2,4 GHz perto, nunca Bluetooth.',
         '',
         '#Memoria RAM',
-        '+2 pentes (dual channel) com XMP/EXPO LIGADO. Pente unico ou RAM em velocidade JEDEC (2133/2400 DDR4, 4800 DDR5) derruba o 1% low; com GPU integrada a perda chega a 40-60%.',
+        '+2 pentes (dual channel) com XMP/EXPO LIGADO. Pente unico ou RAM em velocidade JEDEC (2133/2400 DDR4, 4800 DDR5) derruba o 1% low. Com GPU integrada a perda chega a 40-60%.',
         '',
         '#Notebook',
         '+Na tomada, sempre. Se tiver MUX switch / "GPU dedicada somente" / Advanced Optimus no software do fabricante (Armoury Crate, MSI Center, Legion Vantage...), ligue para jogar: passar a imagem pela integrada adiciona latencia e tira FPS.',
@@ -5280,15 +5361,15 @@ function Get-GuideBios {
     return @(
         '#TODOS OS PCs',
         '+XMP/EXPO LIGADO (a RAM vem rodando abaixo da velocidade anunciada).',
-        '+Resizable BAR ligado se a GPU suportar (RTX 30+, RX 6000+, Intel Arc; na Arc e praticamente obrigatorio).',
-        '+BIOS atualizada. Anote o valor original de tudo que mudar; nomes variam por fabricante.',
+        '+Resizable BAR ligado se a GPU suportar (RTX 30+, RX 6000+, Intel Arc. Na Arc e praticamente obrigatorio).',
+        '+BIOS atualizada. Anote o valor original de tudo que mudar. Nomes variam por fabricante.',
         '',
         '#INTEL (CPU)',
         '!13a e 14a geracao (i5/i7/i9 13xxx/14xxx desktop): atualize a BIOS para microcode 0x12B ou mais novo e escolha "Intel Default Settings". E a correcao oficial da Intel para degradacao por voltagem (travamentos que parecem stutter). O Diagnostico confere seu microcode.',
-        '+Core Ultra 200S (Arrow Lake): Windows e BIOS atualizados corrigiram a latencia de memoria do lancamento. O perfil "200S Boost" e opcional (overclock oficial; aumenta limites).',
+        '+Core Ultra 200S (Arrow Lake): Windows e BIOS atualizados corrigiram a latencia de memoria do lancamento. O perfil "200S Boost" e opcional (overclock oficial, aumenta limites).',
         '+Turbo Boost e Speed Shift (HWP) ligados. Turbo Boost Max 3.0: mantenha o driver/servico (manda o jogo para os nucleos mais rapidos).',
         '~12a geracao ou mais nova (nucleos P + E): o Windows as vezes poe a thread do jogo num E-core. Se tiver stutter: algumas placas tem "Legacy Game Compatibility Mode" (Scroll Lock liga/desliga os E-cores) ou use o Process Lasso para prender o Fortnite nos P-cores.',
-        '~C-States: padrao (ligado) e o mais equilibrado. Desligar tira o atraso de despertar, mas esquenta; evidencia de ganho media/fraca. Meca com o LatencyMon.',
+        '~C-States: padrao (ligado) e o mais equilibrado. Desligar tira o atraso de despertar, mas esquenta. Evidencia de ganho media/fraca. Meca com o LatencyMon.',
         '~Hyper-Threading: manter ligado, salvo se voce mediu ganho desligando.',
         '',
         '#AMD RYZEN',
@@ -5296,7 +5377,7 @@ function Get-GuideBios {
         '+CPPC e "CPPC Preferred Cores" ligados + driver de CHIPSET da AMD instalado (sem ele o nucleo preferido nao funciona). O Diagnostico confere.',
         '!fTPM: BIOS com AGESA anterior ao 1.2.0.7 causa travadas de 1-2 s (audio e mouse congelam). Atualize a BIOS.',
         '+AM5 com DDR5-6000: FCLK ~2000 MHz e UCLK = MCLK (1:1). A regra antiga "tudo 1:1:1" e do AM4/DDR4.',
-        '+PBO ligado; Curve Optimizer negativo (com teste de estabilidade) da mais boost sustentado.',
+        '+PBO ligado. Curve Optimizer negativo (com teste de estabilidade) da mais boost sustentado.',
         '~Global C-State Control: deixe o padrao (Auto/Enabled). Desligar tem resultado misto e reduz o boost.',
         '~SMT: manter ligado. Testes controlados no Fortnite nao mostram ganho desligando.',
         '~Ryzen X3D com 2 CCDs (7900X3D/7950X3D/9900X3D/9950X3D): Game Mode e Xbox Game Bar ATIVOS + servico "AMD 3D V-Cache Performance Optimizer" (vem com o chipset). Este otimizador respeita isso sozinho.'
@@ -5309,10 +5390,10 @@ function Get-GuideNvidia {
         '',
         '#PAINEL DE CONTROLE NVIDIA > Gerenciar config. 3D > Configuracoes de programa > Fortnite',
         '+Modo de gerenciamento de energia: Preferir desempenho maximo.',
-        '+Modo de baixa latencia: Ultra (vale para jogos SEM Reflex; no Fortnite o Reflex assume).',
+        '+Modo de baixa latencia: Ultra (vale para jogos SEM Reflex. No Fortnite o Reflex assume).',
         '+Filtragem de textura - qualidade: Alto desempenho.',
-        '+Otimizacao com threads: Automatico (so tem efeito em DX11/OpenGL; o Fortnite atual e DX12).',
-        '+Cache de shader (Configuracoes globais): padrao do driver ou Ilimitado em SSD. Evita engasgo de recompilacao; nao muda latencia.',
+        '+Otimizacao com threads: Automatico (so tem efeito em DX11/OpenGL. O Fortnite atual e DX12).',
+        '+Cache de shader (Configuracoes globais): padrao do driver ou Ilimitado em SSD. Evita engasgo de recompilacao. Nao muda latencia.',
         '',
         '#G-SYNC (se o monitor tem)',
         '+Receita Blur Busters: G-SYNC ligado + V-SYNC LIGADO no painel (desligado no jogo) + Reflex ligado (limita sozinho uns FPS abaixo do Hz). Sem tearing e com latencia quase igual a FPS livre.',
@@ -5332,8 +5413,8 @@ function Get-GuideNvidia {
 function Get-GuideAmd {
     return @(
         '#O QUE FUNCIONA NO FORTNITE',
-        '!Anti-Lag 2: o Fortnite NAO suporta (precisa integracao no jogo; lista oficial da AMD: CS2, Dota 2, Ghost of Tsushima).',
-        '~Anti-Lag (classico, do driver): so age em DX11. Com o Fortnite em DX12/Modo Desempenho ele nao faz efeito; pode deixar ligado sem problema.',
+        '!Anti-Lag 2: o Fortnite NAO suporta (precisa integracao no jogo. Lista oficial da AMD: CS2, Dota 2, Ghost of Tsushima).',
+        '~Anti-Lag (classico, do driver): so age em DX11. Com o Fortnite em DX12/Modo Desempenho ele nao faz efeito. Pode deixar ligado sem problema.',
         '!Nunca use Anti-Lag+ (foi removido dos drivers apos banimentos em outros jogos).',
         '',
         '#AMD SOFTWARE: ADRENALIN > Jogos > Fortnite',
@@ -5357,8 +5438,8 @@ function Get-GuideIntelGpu {
         '+Graficos integrados: use o Modo DESEMPENHO do Fortnite (o mais leve).',
         '+A iGPU usa a RAM do sistema: DUAL CHANNEL e com XMP e a mudanca de maior impacto (single channel corta 40-60% do desempenho).',
         '+Placas Arc (A/B): Resizable BAR LIGADO na BIOS. A Intel diz que e praticamente obrigatorio.',
-        '+Intel Graphics Software: modo de energia desempenho maximo; sync desligado.',
-        '!"Baixa latencia" (XeLL) so age se o jogo integrar o XeLL; no Fortnite nao ha confirmacao.',
+        '+Intel Graphics Software: modo de energia desempenho maximo. Sync desligado.',
+        '!"Baixa latencia" (XeLL) so age se o jogo integrar o XeLL. No Fortnite nao ha confirmacao.',
         '~Notebook: Panel Self Refresh DESLIGADO na tomada (Intel Graphics Software > Sistema > Energia): pode causar travadinhas.',
         '+Feche navegadores/overlays: a iGPU divide calor e memoria com a CPU.',
         '~Notebook: na tomada e com o exe do Fortnite marcado como "Alto desempenho" (item no menu Input Lag).'
@@ -5369,19 +5450,19 @@ function Get-GuideNet {
         '#O QUE REALMENTE BAIXA O PING',
         '+Cabo Ethernet (Cat5e ou melhor) direto no roteador.',
         '+Servidor certo: no Fortnite, Configuracoes > Jogo > Regiao de matchmaking = a mais proxima (Brasil).',
-        '+Nao baixar/streamar junto (bufferbloat). Se o roteador tiver SQM/QoS (fq_codel/cake), ligue; ou limite a banda a ~90%.',
+        '+Nao baixar/streamar junto (bufferbloat). Se o roteador tiver SQM/QoS (fq_codel/cake), ligue. Ou limite a banda a ~90%.',
         '+Reinicie o roteador de vez em quando e mantenha o firmware atualizado.',
         '',
         '#SE PRECISA USAR WI-FI',
-        '+Banda 5 GHz ou 6 GHz (Wi-Fi 6E), perto do roteador e sem paredes; canal limpo.',
+        '+Banda 5 GHz ou 6 GHz (Wi-Fi 6E), perto do roteador e sem paredes. Canal limpo.',
         '+Roaming do adaptador no minimo e economia de energia do adaptador em desempenho maximo (item "Adaptador de rede").',
         '+Feche apps que usam rede e desligue VPN durante a partida.',
         '',
         '#COMO MEDIR',
-        '~No Diagnostico ha um teste de ping/jitter para os servidores da Epic (ICMP; o jogo usa UDP, entao serve como base). Jitter abaixo de 10 ms e bom.',
+        '~No Diagnostico ha um teste de ping/jitter para os servidores da Epic (ICMP. O jogo usa UDP, entao serve como base). Jitter abaixo de 10 ms e bom.',
         '',
         '#O QUE TEM POUCO OU NENHUM EFEITO',
-        '~Nagle, reserva de QoS de 20% e NetworkThrottlingIndex: o gameplay e UDP; ganhos pequenos ou nulos. Estao no menu como opcionais e reversiveis.'
+        '~Nagle, reserva de QoS de 20% e NetworkThrottlingIndex: o gameplay e UDP. Ganhos pequenos ou nulos. Estao no menu como opcionais e reversiveis.'
     )
 }
 function Get-GuideMyths {
@@ -5390,16 +5471,16 @@ function Get-GuideMyths {
         '~Nada aqui e aplicado pelo otimizador. A lista existe para voce nao perder tempo nem seguranca.',
         '',
         '#WINDOWS',
-        '!DisablePagingExecutive=1: afeta um grupo minusculo de drivers; com pouca RAM pode piorar.',
+        '!DisablePagingExecutive=1: afeta um grupo minusculo de drivers. Com pouca RAM pode piorar.',
         '!LargeSystemCache=1: feito para servidor de arquivos. A propria Microsoft desaconselha em PC de jogo.',
         '!SvcHostSplitThresholdInKB: muda o isolamento de servicos, nao latencia.',
-        '!Desligar a compressao de memoria (MMAgent): teste controlado nao achou ganho; com 8-16 GB pode piorar.',
-        '!useplatformtick / useplatformclock (HPET forcado): os tweaks de timer com mais relatos de PIORAR input lag. O otimizador nunca liga; o BCDEdit avancado so REMOVE o useplatformclock se alguem forcou.',
+        '!Desligar a compressao de memoria (MMAgent): teste controlado nao achou ganho. Com 8-16 GB pode piorar.',
+        '!useplatformtick / useplatformclock (HPET forcado): os tweaks de timer com mais relatos de PIORAR input lag. O otimizador nunca liga. O BCDEdit avancado so REMOVE o useplatformclock se alguem forcou.',
         '!IRQ priority / "IRQ8Priority": chave sem efeito no Windows moderno.',
         '',
         '#CPU',
         '!Desligar SMT/Hyper-Threading "por latencia": no Fortnite a diferenca fica dentro da margem de erro.',
-        '!Desligar mitigacoes Spectre em CPU recente: ganho ~0 e perda real de seguranca (em CPU antiga ha algum ganho; item de risco no menu CPU).',
+        '!Desligar mitigacoes Spectre em CPU recente: ganho ~0 e perda real de seguranca (em CPU antiga ha algum ganho. Item de risco no menu CPU).',
         '!Overclock de ring/uncore "para FPS": reduz latencia de cache no papel, quase nada no jogo, e aumenta o risco de instabilidade.',
         '',
         '#GPU',
@@ -5407,11 +5488,11 @@ function Get-GuideMyths {
         '!Desligar ULPS numa GPU AMD unica: so importa em CrossFire ou notebook hibrido.',
         '!"Threaded Optimization sempre ON": resultado misto, pode piorar frametime em jogo leve.',
         '!Limitar FPS muito abaixo do que o PC aguenta "por consistencia": aumenta a latencia. Limite so 3 abaixo do Hz (com VRR) ou use o Reflex.',
-        '!DisableDynamicPstate "obrigatorio": quase igual ao "Preferir desempenho maximo" no jogo; so aumenta consumo parado (opcional no menu GPU).',
+        '!DisableDynamicPstate "obrigatorio": quase igual ao "Preferir desempenho maximo" no jogo. So aumenta consumo parado (opcional no menu GPU).',
         '',
         '#REDE',
         '!"Liberar os 20% de banda reservada do QoS": o Windows nao reserva banda assim para jogos.',
-        '!TCP tweaks para ping in-game: o Fortnite joga por UDP; TCP so pesa em login/loja/downloads.'
+        '!TCP tweaks para ping in-game: o Fortnite joga por UDP. TCP so pesa em login/loja/downloads.'
     )
 }
 
@@ -5643,7 +5724,7 @@ function Test-EpicPing {
         try { $r = $p.Send($HostName, 1000); if ($r.Status -eq 'Success') { $t += [int]$r.RoundtripTime } else { $lost++ } } catch { $lost++ }
         Start-Sleep -Milliseconds 120
     }
-    if ($t.Count -eq 0) { return @{ Ok = $false; Msg = 'sem resposta ICMP (o jogo usa UDP; pode estar bloqueado)' } }
+    if ($t.Count -eq 0) { return @{ Ok = $false; Msg = 'sem resposta ICMP (o jogo usa UDP. Pode estar bloqueado)' } }
     $m = $t | Measure-Object -Minimum -Maximum -Average
     return @{ Ok = $true; Min = $m.Minimum; Max = $m.Maximum; Avg = [math]::Round($m.Average, 1); Jitter = ($m.Maximum - $m.Minimum); Loss = [math]::Round(100.0 * $lost / $Count, 0) }
 }
@@ -5702,7 +5783,7 @@ function Show-HwSummary {
     if ($hw.Gpus.Count -gt 1) { Say-Info 'Mais de uma GPU: garanta que o jogo usa a dedicada (item "Fortnite sempre na GPU de alto desempenho").'; $n++ }
     try {
         $dg = Get-CimInstance -Namespace 'root\Microsoft\Windows\DeviceGuard' -ClassName Win32_DeviceGuard -ErrorAction Stop
-        if ([int]$dg.VirtualizationBasedSecurityStatus -eq 2) { Say-Info 'VBS/Integridade de memoria esta ATIVA (custa FPS em alguns jogos; e uma troca com seguranca).'; $n++ }
+        if ([int]$dg.VirtualizationBasedSecurityStatus -eq 2) { Say-Info 'VBS/Integridade de memoria esta ATIVA (custa FPS em alguns jogos. E uma troca com seguranca).'; $n++ }
     } catch { }
     $hags = Get-Reg 'HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers' 'HwSchMode'
     if ($null -ne $hags) { $hs = 'desligado'; if ([int]$hags -eq 2) { $hs = 'ligado' }; Say-Info ((L 'HAGS (agendamento por hardware)') + ': ' + (L $hs)) }
@@ -5769,11 +5850,11 @@ function Get-BulkList {
 }
 function New-RestorePoint {
     if ($script:Dry) { Say-Dry 'Checkpoint-Computer'; return }
-    Say '  Criando ponto de restauracao (pode levar ~30 s; ok se falhar)...' 'DarkGray'
+    Say '  Criando ponto de restauracao (pode levar ~30 s. Ok se falhar)...' 'DarkGray'
     try {
         $w = $null
         Checkpoint-Computer -Description 'Fortnite_Otimizador' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction Stop -WarningVariable w -WarningAction SilentlyContinue
-        if ($w) { Say-Info 'O Windows so cria 1 ponto a cada 24 h; seguimos com os backups proprios.' } else { Say-Ok 'Ponto de restauracao criado.' }
+        if ($w) { Say-Info 'O Windows so cria 1 ponto a cada 24 h. Seguimos com os backups proprios.' } else { Say-Ok 'Ponto de restauracao criado.' }
     } catch { Say-Info 'Ponto de restauracao nao criado (Protecao do Sistema desligada?). Seguimos com os backups proprios.' }
 }
 function Invoke-Bulk {
@@ -6109,7 +6190,7 @@ function Invoke-SelfTest {
         if ($bad.Count) { Write-Host ('     faltando: ' + (($bad | ForEach-Object { $_.Id }) -join ',')) -ForegroundColor Red }
         $bad.Count -eq 0
     }
-    T 'catalogo: toggle tem Apply ou RegsFn; action tem Apply' {
+    T 'catalogo: toggle tem Apply ou RegsFn. Action tem Apply' {
         $bad = @($script:Tweaks | Where-Object { ($_.Kind -eq 'toggle' -and -not $_.Apply -and -not $_.RegsFn) -or ($_.Kind -eq 'action' -and -not $_.Apply) })
         $bad.Count -eq 0
     }
@@ -6255,7 +6336,7 @@ namespace NipTest {
         $r = Show-Menu -Title 't' -Items $items 6>$null
         $r -eq 2
     }
-    T 'menu: cabecalho e ignorado; Esc volta -1' {
+    T 'menu: cabecalho e ignorado. Esc volta -1' {
         $script:KeyQueue.Clear()
         foreach ($k in 'down', 'down', 'down', 'up', 'up', 'esc') { $script:KeyQueue.Enqueue($k) }
         $items = @(@{ Label = 'a'; Badges = @() }, @{ Header = $true; Label = 'h' }, @{ Label = 'b'; Badges = @() })
@@ -6359,7 +6440,7 @@ namespace NipTest {
         }
         $ok
     }
-    T 'plano: X3D 2 CCDs NAO mexe em core parking; classico trava minimo 100; hibrido prefere P-cores' {
+    T 'plano: X3D 2 CCDs NAO mexe em core parking. Classico trava minimo 100. Hibrido prefere P-cores' {
         $CP = '0cc5b647-c1df-4637-891a-dec35c318583'; $CX = 'ea062031-0e34-4ff1-9b6d-eb1059334028'; $UP = '616cdaa5-695e-4545-97ad-97dc2d1bdd88'; $MN = '893dee8e-2bef-41e0-89c6-b55d0929964c'; $SP = '93b8b6dc-0698-4d1c-9ee4-0644e900c85d'
         $x = @(Get-PlanSettings 'x3d2'); $c = @(Get-PlanSettings 'classic'); $h = @(Get-PlanSettings 'hybrid'); $r = @(Get-PlanSettings 'ryzen')
         $a = (@($x | Where-Object { @($CP, $CX, $UP) -contains $_.Set }).Count -eq 0)
