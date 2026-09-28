@@ -1,0 +1,3 @@
+# o .bat PRECISA de CRLF (o cmd.exe quebra com LF): o git nao converte
+*.bat -text
+*.png binary
