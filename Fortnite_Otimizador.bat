@@ -2,14 +2,24 @@
 setlocal EnableExtensions DisableDelayedExpansion
 set "SELF=%~f0"
 title FORTNITE OTIMIZADOR v2.1  -  Made by: Lina  ^|  Discord: kali_linax
-:: -----------------------------------------------------------------
-::  FORTNITE OTIMIZADOR v2.1  -  arquivo unico (.bat + motor PowerShell)
-::  Made by: Lina   |   Discord: kali_linax
-::  Este cabecalho so: (1) pede administrador, (2) extrai o motor que
-::  esta no FIM deste mesmo arquivo (depois da linha #__PS_BEGIN__) para
-::  %TEMP%\FortniteOtimizador\main.ps1 e (3) executa com menus de setas.
-::  Argumentos uteis:  -DryRun (nao grava nada)   -SelfTest (testes)   -Language pt|en
-:: -----------------------------------------------------------------
+:: Fortnite Otimizador v2.1 - lirenzzzin (Lina)  |  discord: kali_linax
+:: github.com/lirenzzzin/Fortnite-Optmizer
+::
+:: uso:  Fortnite_Otimizador.bat [-DryRun] [-Language pt|en] [-SelfTest]
+::   -DryRun   mostra o que faria, nao grava nada
+::   -SelfTest roda os testes (uso meu)
+::
+:: changelog
+::   2.1  idioma pt/en, visual novo, diagnostico com mais alertas, guia de mitos
+::   2.0  reescrito em powershell, menus com setas, suporte amd/intel, plano de energia por cpu
+::   1.5  ultima versao em batch puro
+::
+:: TODO
+::   - testar de verdade em amd / intel hibrido / x3d (so testei no meu i5 + 1650)
+::   - timer forcado: medir se vale a pena ou tirar
+::   - ver se da pra aplicar opcoes da amd sem o adrenalin
+::
+:: o motor powershell fica no fim do arquivo, depois de #__PS_BEGIN__
 if not "%~1"=="" goto RUN
 net session >nul 2>&1
 if errorlevel 1 goto ELEVATE
@@ -63,7 +73,8 @@ param(
 # =====================================================================
 #  FORTNITE OTIMIZADOR v2.1 - motor PowerShell (embutido no .bat)
 #  Made by: Lina   |   Discord: kali_linax
-#  Somente ASCII de proposito (blindagem contra codepage do console).
+#  so ASCII aqui (codepage do cmd zoa acento)
+#  TODO: separar em modulos se crescer mais
 #  -DryRun   : nao grava NADA no sistema (so mostra o que faria)
 #  -SelfTest : bateria automatica de testes (usada no desenvolvimento)
 # =====================================================================
@@ -5045,7 +5056,6 @@ function Test-PowerPlanReal {
 }
 
 # =====================================================================
-#  EXTRAS v2.1 (pesquisa set/2026): GPU/CPU + alertas de diagnostico
 #  Cada item traz evidencia honesta. Fontes nos comentarios.
 # =====================================================================
 
@@ -5207,8 +5217,6 @@ function Show-ExtraAlerts {
 
 # =====================================================================
 #  GUIAS (texto). Prefixos: # titulo | + bom | ! aviso | ~ nota
-#  Revisados em set/2026 (pesquisa: Epic, NVIDIA, AMD, Intel, Microsoft,
-#  Blur Busters, testes independentes).
 # =====================================================================
 function Get-GuideInGame {
     return @(
